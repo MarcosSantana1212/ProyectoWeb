@@ -1,0 +1,74 @@
+<table class="table table-bordered" style="color:white;">
+
+    <thead>
+
+        <tr>
+
+            <th colspan="3" class="text-center">
+
+                Carro Compras
+
+            </th>
+
+        </tr>
+
+        <tr>
+
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Opciones</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+        
+        {% if request.session.carro.items %} <!-- SI HAY PRODUCTOS EN EL CARRO... -->
+        
+            {% for key, value in request.session.carro.items %} <!-- POR CADA PRODUCTO EN EL CARRO... -->
+
+                <tr>
+                    <tr class="text-center">
+                        <td>{{value.nombre}}</td>
+                        <td>{{value.cantidad}}</td>
+                        <td>
+                            <a href="{% url 'carro:agregar' value.producto_id %}" class="btn btn-am btn-success">+</a>
+                            <a href="{% url 'carro:restar' value.producto_id %}" class="btn btn-am btn-success">-</a>
+                            <a href="{% url 'carro:eliminar' value.producto_id %}" class="btn btn-am btn-success">del</a> <br>
+
+                            {{value.precio}} Є
+                        </td>
+                    </tr>
+                </tr>
+
+            {% endfor %}
+
+        {% else %} <!-- COMO NO HAY ELEMENTOS EN EL CARRO, ENTONCES... -->
+        
+            <tr>
+                <td colspan="3">
+
+                    <div class="alert alert-danger text-center">
+                        Sin productos
+                    </div>
+
+                </td>
+            </tr>
+
+        {% endif %}
+
+
+
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <td colspan="3">
+                Total: {{importe_total_carro}} Є
+            </td>
+        </tr>
+    </tfoot>
+
+
+</table>
